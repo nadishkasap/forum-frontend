@@ -89,28 +89,36 @@ import axios from "axios";
 export default {
   data() {
     return {
-      username: "",
-      email: "",
-      password: "",
-      password_confirm: "",
+      user_name: "",
+      user_email: "",
+      user_password: "",
+      user_password_confirm: "",
       msg: null,
       classAlert: null,
     };
   },
   methods: {
-  async register() {
-      try {
-        await axios.post("register", {
-          user_name: this.username,
-          user_email: this.email,
-          user_password: this.password,
-        });
-        (this.username = ""), (this.email = ""),(this.password = ""), this.$router.push("/");
+  register() {
+    const form = new FormData();
+      form.append("user_name", this.username);
+      form.append("user_email", this.email);
+      form.append("user_password", this.password);
+       form.append("user_type", 0);
+
+      axios
+        .post("http://localhost/forum/public/register", form)
+        .then(() => {
           this.msg = "You have been successfully registered!";
-        }catch(err) {
+          this.classAlert = "success";
+          this.username = "";
+          this.email = "";
+          this.password = "";
+          this.password_confirm = "";
+        })
+        .catch(err => {
           this.msg = err.response.data.messages.error;
           this.classAlert = "danger";
-        }
+        });
       //axios
     }
   },
