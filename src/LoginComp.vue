@@ -15,7 +15,7 @@
            <input type="password" class="form-control" name="password" id="password" v-model="password">
           </div>
          
-           <alert v-if="msg"></alert>
+           <alert v-if="msg" :msg="msg" :classAlert="classAlert"></alert>
          
           <div class="row">
             <div class="col-12 col-sm-4">
@@ -65,9 +65,11 @@ methods:{
           this.password = "";
         })
         .catch(err => {
-          console.log(err);
-
-          this.msg = err.response.data.error_description;
+        this.msg =""
+          Object.keys(err.response.data).forEach((key) => {
+            this.msg += err.response.data[key]+"<br>";
+            console.log("Value: ", err.response.data[key]);
+          });
           this.classAlert = "danger";
         });
     }

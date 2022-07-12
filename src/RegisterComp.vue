@@ -66,7 +66,7 @@
                 />
               </div>
             </div>
-            <alert v-if="msg"></alert>
+            <alert v-if="msg" :msg="msg" :classAlert="classAlert"></alert>
           </div>
 
           <div class="row">
@@ -98,12 +98,12 @@ export default {
     };
   },
   methods: {
-  register() {
-    const form = new FormData();
-      form.append("user_name", this.username);
-      form.append("user_email", this.email);
-      form.append("user_password", this.password);
-       form.append("user_type", 0);
+    register() {
+      const form = new FormData();
+      form.append("username", this.username);
+      form.append("email", this.email);
+      form.append("password", this.password);
+      form.append("user_type", 0);
 
       axios
         .post("http://localhost/forum/public/register", form)
@@ -115,13 +115,16 @@ export default {
           this.password = "";
           this.password_confirm = "";
         })
-        .catch(err => {
-          console.log(err);
-          this.msg = err.response.data.messages.error;
+        .catch((err) => {
+          this.msg =""
+          Object.keys(err.response.data).forEach((key) => {
+            this.msg += err.response.data[key]+"<br>";
+            console.log("Value: ", err.response.data[key]);
+          });
           this.classAlert = "danger";
         });
       //axios
-    }
+    },
   },
   components: {
     Alert,
