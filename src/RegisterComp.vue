@@ -24,9 +24,9 @@
                 <input
                   type="text"
                   class="form-control"
-                  name="username"
-                  id="username"
-                  v-model="username"
+                  name="user_name"
+                  id="user_name"
+                  v-model="user_name"
                 />
               </div>
             </div>
@@ -36,9 +36,9 @@
                 <input
                   type="text"
                   class="form-control"
-                  name="email"
-                  id="email"
-                  v-model="email"
+                  name="user_email"
+                  id="user_email"
+                  v-model="user_email"
                 />
               </div>
             </div>
@@ -48,9 +48,9 @@
                 <input
                   type="password"
                   class="form-control"
-                  name="password"
-                  id="password"
-                  v-model="password"
+                  name="user_password"
+                  id="user_password"
+                  v-model="user_password"
                 />
               </div>
             </div>
@@ -60,9 +60,9 @@
                 <input
                   type="password"
                   class="form-control"
-                  name="password_confirm"
-                  id="password_confirm"
-                  v-model="password_confirm"
+                  name="user_password_confirm"
+                  id="user_password_confirm"
+                  v-model="user_password_confirm"
                 />
               </div>
             </div>
@@ -100,9 +100,9 @@ export default {
   methods: {
     register() {
       const form = new FormData();
-      form.append("username", this.username);
-      form.append("email", this.email);
-      form.append("password", this.password);
+      form.append("user_name", this.user_name);
+      form.append("user_email", this.user_email);
+      form.append("user_password", this.user_password);
       form.append("user_type", 0);
 
       axios
@@ -110,10 +110,10 @@ export default {
         .then(() => {
           this.msg = "You have been successfully registered!";
           this.classAlert = "success";
-          this.username = "";
-          this.email = "";
-          this.password = "";
-          this.password_confirm = "";
+          this.user_name = "";
+          this.user_email = "";
+          this.user_password = "";
+          this.user_password_confirm = "";
         })
         .catch((err) => {
           this.msg =""
