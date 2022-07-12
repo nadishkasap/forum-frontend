@@ -4,26 +4,18 @@
       <div class="container">
         <h3>Login</h3>
         <hr>
-       
-          <div class="alert alert-success" role="alert">
-           
-          </div>
-       
+  
         <form @submit.prevent="login()" action="/login" method="post">
           <div class="form-group">
            <label for="email">Email address</label>
-           <input type="text" class="form-control" name="email" id="email" >
+           <input type="text" class="form-control" name="email" id="email" v-model="email">
           </div>
           <div class="form-group">
            <label for="password">Password</label>
-           <input type="password" class="form-control" name="password" id="password">
+           <input type="password" class="form-control" name="password" id="password" v-model="password">
           </div>
          
-            <div class="col-12">
-              <div class="alert alert-danger" role="alert">
-  
-              </div>
-            </div>
+           <alert v-if="msg"></alert>
          
           <div class="row">
             <div class="col-12 col-sm-4">
@@ -40,11 +32,45 @@
 </template>
 
 <script>
+import Alert from "./components/AlertComp";
+import axios from "axios";
 export default {
+    data() {
+    return {
+      token: null,
+      expires_in: null,
+      email: "",
+      password: "",
+      msg: null,
+      classAlert: null
+    };
+  },
+  components: {
+    Alert
+  },
 methods:{
-  login(){
-    console.log('test');
-  }
+  login() {
+  
+      const form = new FormData();
+
+      form.append("username", this.email);
+      form.append("password", this.password);
+
+     axios
+        .post("http://localhost/forum/public/login", form)
+        .then(()=> {
+          this.msg = "You have been successfully logged in!";
+          this.classAlert = "success";
+          this.email = "";
+          this.password = "";
+        })
+        .catch(err => {
+          console.log(err);
+
+          this.msg = err.response.data.error_description;
+          this.classAlert = "danger";
+        });
+    }
 }
 }
 </script>

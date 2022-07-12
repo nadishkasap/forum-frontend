@@ -116,6 +116,7 @@ export default {
           this.password_confirm = "";
         })
         .catch(err => {
+          console.log(err);
           this.msg = err.response.data.messages.error;
           this.classAlert = "danger";
         });
