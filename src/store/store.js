@@ -1,10 +1,7 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import { createStore } from 'vuex'
 import router from "../routes";
 
-Vue.use(Vuex);
-
-export const store = new Vuex.Store({
+export default createStore({
   state: {
     isLoggedIn: false,
   },
@@ -20,10 +17,10 @@ export const store = new Vuex.Store({
     },
     logout(state) {
       state.isLoggedIn = false;
-      localStorage.removeItem("token");
+      localStorage.removeItem("access_token");
       localStorage.removeItem("expires");
 
-      router.push("/signin");
+      router.push("/login");
     },
   },
   actions: {

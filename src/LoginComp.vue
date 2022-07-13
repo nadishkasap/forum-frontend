@@ -58,6 +58,7 @@
 <script>
 import Alert from "./components/AlertComp";
 import axios from "axios";
+
 export default {
   data() {
     return {
@@ -81,11 +82,17 @@ export default {
 
       axios
         .post("http://localhost/forum/public/login", form)
-        .then(() => {
+        .then((res) => {
           this.msg = "You have been successfully logged in!";
           this.classAlert = "success";
           this.user_email = "";
           this.user_password = "";
+          const expiresMs = 3600 * 1000;
+          const now = new Date();
+          const expireDate = new Date(now.getTime() + expiresMs);
+          localStorage.setItem("access_token", res.data.access_token);
+          localStorage.setItem("expires_in", expireDate);
+          this.$store.dispatch("login", expiresMs);
         })
         .catch((err) => {
           this.msg = "";
