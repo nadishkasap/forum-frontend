@@ -11,10 +11,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
+        <tr v-for="post in posts" :key="post.post_id">
+          <td>{{ post.post_id }}</td>
+          <td>{{ post.post_title }}</td>
+          <td>{{ post.post_description }}</td>
           <td>
             <button class="button btn btn-danger">Delete</button>
           </td>
@@ -39,14 +39,15 @@ export default {
     getPosts() {
       const token = localStorage.getItem("access_token");
       const config = {
-        headers: { Authorization: "Bearer " + token },
+        headers: {
+          Authorization: "Bearer " + token
+        },
       };
-      
+
       axios
-        .get('http://localhost/forum/public/post',config)
+        .get("http://localhost/forum/public/post", config)
         .then((res) => {
-          this.posts = res.data;
-          console.log(this.posts);
+          this.posts = res.data.posts;
         })
         .catch((err) => {
           console.log(err);
