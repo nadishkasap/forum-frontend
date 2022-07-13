@@ -19,6 +19,7 @@ export default createStore({
       state.isLoggedIn = false;
       localStorage.removeItem("access_token");
       localStorage.removeItem("expires");
+      localStorage.removeItem("user_id");
 
       router.push("/login");
     },

@@ -20,8 +20,8 @@ export default {
     appNav:NavBar
   },
   created() {
-    const expires = localStorage.getItem("expires");
-    const token = localStorage.getItem("token");
+    const expires = localStorage.getItem("expires_in");
+    const token = localStorage.getItem("access_token");
 
     if (expires && token) {
       var expiresMs = new Date(expires);
