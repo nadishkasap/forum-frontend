@@ -41,7 +41,7 @@
 
           <alert v-if="msg" :msg="msg" :classAlert="classAlert"></alert>
 
-          <div class="row">
+          <div class="row section-margin">
             <div class="col-12 col-sm-4">
               <button type="submit" class="btn btn-primary">Login</button>
             </div>
@@ -92,6 +92,7 @@ export default {
           const expireDate = new Date(now.getTime() + expiresMs);
           localStorage.setItem("access_token", res.data.access_token);
           localStorage.setItem("expires_in", expireDate);
+          localStorage.setItem("user_id", res.data.user.user_id);
           this.$store.dispatch("login", expiresMs);
         })
         .catch((err) => {

@@ -60,7 +60,9 @@ body {
   padding-left: 0;
   margin-bottom: 0;
 }
-
+.section-margin{
+  margin-top: 10px;
+}
 @media (max-width: 768px) {
   .form-wrapper .text-right {
     text-align: center !important;

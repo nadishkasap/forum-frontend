@@ -20,7 +20,7 @@
           <MenuLink path="/register" text="Register"></MenuLink>
         </ul>
         <ul v-else class="navbar-nav mr-auto">
-          <MenuLink path="/" text="Admin"></MenuLink>
+          <MenuLink path="/" text="Home"></MenuLink>
 
           <li class="nav-item">
             <a class="nav-link" href="#" @click.prevent="logout()">Logout</a>

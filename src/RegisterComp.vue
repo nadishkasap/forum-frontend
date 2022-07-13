@@ -20,6 +20,15 @@
           <div class="row">
             <div class="col-12 col-sm-6">
               <div class="form-group">
+                <label for="username">User Type</label>
+                <select  class="form-control" name="user_type" id="user_type" v-model="user_type">
+                  <option value="0">User</option>
+                  <option value="1">Admin</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <div class="form-group">
                 <label for="username">User Name</label>
                 <input
                   type="text"
@@ -69,7 +78,7 @@
             <alert v-if="msg" :msg="msg" :classAlert="classAlert"></alert>
           </div>
 
-          <div class="row">
+          <div class="row section-margin">
             <div class="col-12 col-sm-4">
               <button type="submit" class="btn btn-primary">Register</button>
             </div>
@@ -89,6 +98,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      user_type: "",
       user_name: "",
       user_email: "",
       user_password: "",
@@ -103,22 +113,23 @@ export default {
       form.append("user_name", this.user_name);
       form.append("user_email", this.user_email);
       form.append("user_password", this.user_password);
-      form.append("user_type", 0);
+      form.append("user_type", this.user_type);
 
       axios
         .post("http://localhost/forum/public/register", form)
         .then(() => {
           this.msg = "You have been successfully registered!";
           this.classAlert = "success";
+          this.user_type = "";
           this.user_name = "";
           this.user_email = "";
           this.user_password = "";
           this.user_password_confirm = "";
         })
         .catch((err) => {
-          this.msg =""
+          this.msg = "";
           Object.keys(err.response.data).forEach((key) => {
-            this.msg += err.response.data[key]+"<br>";
+            this.msg += err.response.data[key] + "<br>";
             console.log("Value: ", err.response.data[key]);
           });
           this.classAlert = "danger";
