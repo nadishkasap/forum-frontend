@@ -10,9 +10,33 @@
 <script>
 import NavBar from "./components/NavBar"
 export default {
+    computed: {
+    loggedIn() {
+      return this.$store.getters.loginState;
+    }
+  },
   name: "App",
   components: {
     appNav:NavBar
+  },
+  created() {
+    const expires = localStorage.getItem("expires");
+    const token = localStorage.getItem("token");
+
+    if (expires && token) {
+      var expiresMs = new Date(expires);
+      var now = new Date();
+      now = now.getTime();
+      expiresMs = expiresMs.getTime();
+      if (now > expiresMs) {
+        this.$store.dispatch("logout");
+      } else {
+        this.$store.dispatch("login", expiresMs - now);
+      }
+    } else {
+      if (this.$router.currentRoute.name !== "Login")
+        this.$router.push({ name: "Login" });
+    }
   }
 };
 </script>
